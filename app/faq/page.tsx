@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import { Shell } from "@/lumen-frontend/components/site/Shell";
-import { PageHero } from "@/lumen-frontend/components/site/PageHero";
-import { CtaBand } from "@/lumen-frontend/components/site/CtaBand";
-import { FaqExplorer } from "@/lumen-frontend/components/site/FaqExplorer";
-import { FAQ_GROUPS } from "@/lumen-frontend/lib/content";
+import { Shell } from "@/components/site/Shell";
+import { PageHero } from "@/components/site/PageHero";
+import { CtaBand } from "@/components/site/CtaBand";
+import { FaqExplorer } from "@/components/site/FaqExplorer";
+import { FAQ_GROUPS } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "FAQ — Lumen",

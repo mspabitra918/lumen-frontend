@@ -1,11 +1,7 @@
 import type { Metadata } from "next";
-import { ApplyWizard } from "@/lumen-frontend/components/apply/ApplyWizard";
-import { LOAN_TERMS } from "@/lumen-frontend/components/apply/options";
-import {
-  AMOUNT_STEP,
-  MAX_AMOUNT,
-  MIN_AMOUNT,
-} from "@/lumen-frontend/components/apply/types";
+import { ApplyWizard } from "@/components/apply/ApplyWizard";
+import { LOAN_TERMS } from "@/components/apply/options";
+import { AMOUNT_STEP, MAX_AMOUNT, MIN_AMOUNT } from "@/components/apply/types";
 
 export const metadata: Metadata = { title: "Apply — Lumen" };
 

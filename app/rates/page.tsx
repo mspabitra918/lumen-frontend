@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
-import { Shell, CheckIcon } from "@/lumen-frontend/components/site/Shell";
-import { PageHero } from "@/lumen-frontend/components/site/PageHero";
-import { CtaBand } from "@/lumen-frontend/components/site/CtaBand";
-import { LoanCalculator } from "@/lumen-frontend/components/site/LoanCalculator";
-import { Amortization } from "@/lumen-frontend/components/site/Amortization";
-import { LOAN_TERMS } from "@/lumen-frontend/components/apply/options";
-import { ILLUSTRATIVE_APR, loanSummary, usd } from "@/lumen-frontend/lib/loan";
+import { Shell, CheckIcon } from "@/components/site/Shell";
+import { PageHero } from "@/components/site/PageHero";
+import { CtaBand } from "@/components/site/CtaBand";
+import { LoanCalculator } from "@/components/site/LoanCalculator";
+import { Amortization } from "@/components/site/Amortization";
+import { LOAN_TERMS } from "@/components/apply/options";
+import { ILLUSTRATIVE_APR, loanSummary, usd } from "@/lib/loan";
 
 export const metadata: Metadata = {
   title: "Rates & fees — Lumen",

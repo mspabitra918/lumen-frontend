@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import { Shell, CheckIcon } from "@/lumen-frontend/components/site/Shell";
-import { PageHero } from "@/lumen-frontend/components/site/PageHero";
-import { CtaBand } from "@/lumen-frontend/components/site/CtaBand";
+import { Shell, CheckIcon } from "@/components/site/Shell";
+import { PageHero } from "@/components/site/PageHero";
+import { CtaBand } from "@/components/site/CtaBand";
 
 export const metadata: Metadata = {
   title: "Why Lumen",

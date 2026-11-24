@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Shell, CheckIcon } from "@/lumen-frontend/components/site/Shell";
-import { PageHero } from "@/lumen-frontend/components/site/PageHero";
-import { CtaBand } from "@/lumen-frontend/components/site/CtaBand";
-import { ILLUSTRATIVE_APR, loanSummary, usd } from "@/lumen-frontend/lib/loan";
+import { Shell, CheckIcon } from "@/components/site/Shell";
+import { PageHero } from "@/components/site/PageHero";
+import { CtaBand } from "@/components/site/CtaBand";
+import { ILLUSTRATIVE_APR, loanSummary, usd } from "@/lib/loan";
 
 export const metadata: Metadata = {
   title: "How it works — Lumen",
