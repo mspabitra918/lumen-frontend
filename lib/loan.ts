@@ -4,6 +4,8 @@ export const PROFILES = [
   { key: "fair", label: "Fair", apr: 10 },
 ] as const;
 
+/// Single illustrative loan purpose used for examples across the site.
+
 export function monthlyPayment(
   principal: number,
   aprPct: number,
