@@ -1,10 +1,10 @@
 import { ApplicationFormData } from "@/components/apply/types";
 import { validateApplication } from "@/components/apply/validation";
+import { backendFetch } from "@/lib/backend";
 import { NextResponse } from "next/server";
-import { randomBytes } from "node:crypto";
 
-// Demo endpoint: validates the wizard payload and returns a reference.
-// Swap the body of the success branch for a real insert / forward to your backend.
+// Validates the wizard payload, then forwards it to the backend's
+// POST /api/apply/submit, which runs eligibility checks and stores the application.
 
 /** JSON turns NaN into null; restore NaN so numeric checks behave the same as in the browser. */
 function revive(body: ApplicationFormData): ApplicationFormData {
@@ -53,8 +53,7 @@ export async function POST(req: Request) {
     );
   }
 
-  const data = revive(body);
-  const errors = validateApplication(data);
+  const errors = validateApplication(revive(body));
   if (Object.keys(errors).length) {
     return NextResponse.json(
       { message: "Some fields need attention.", errors },
@@ -63,10 +62,39 @@ export async function POST(req: Request) {
   }
 
   // Never log the payload — it contains SSN and bank details.
-  await new Promise((r) => setTimeout(r, 900));
-  const applicationId = `LMN-${randomBytes(4).toString("hex").toUpperCase()}`;
-  return NextResponse.json(
-    { applicationId, status: "under_review" },
-    { status: 201 },
-  );
+  try {
+    const { ok, status, json } = await backendFetch("/api/apply/submit", req, {
+      method: "POST",
+      body: { data: body },
+    });
+
+    if (!ok) {
+      return NextResponse.json(
+        {
+          message:
+            (json.error as string) ?? "Something went wrong. Please try again.",
+          field: json.field,
+          // A 409 for an existing application carries its ID and status.
+          applicationId: json.applicationId,
+          status: json.status,
+          retryInSeconds: json.retryInSeconds,
+        },
+        { status },
+      );
+    }
+
+    return NextResponse.json(
+      { applicationId: json.applicationId, status: json.status },
+      { status: 201 },
+    );
+  } catch (err) {
+    console.error("Backend submit unreachable:", (err as Error)?.message);
+    return NextResponse.json(
+      {
+        message:
+          "We couldn’t reach our application service. Please try again in a moment.",
+      },
+      { status: 502 },
+    );
+  }
 }

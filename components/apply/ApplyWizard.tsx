@@ -17,6 +17,7 @@ import { BankingStep } from "./steps/BankingStep";
 import { ReviewStep } from "./steps/ReviewStep";
 import { loanSummary, usd } from "@/lib/loan";
 import { Logo } from "../site/Logo";
+import { STATUS_EMAIL_KEY } from "@/lib/status";
 
 const STEPS: { key: Section; label: string; title: string; sub: string }[] = [
   {
@@ -67,7 +68,10 @@ export function ApplyWizard({
   const [maxReached, setMaxReached] = useState(0);
   const [attempted, setAttempted] = useState<Record<number, boolean>>({});
   const [submitting, setSubmitting] = useState(false);
-  const [submitError, setSubmitError] = useState<string | null>(null);
+  const [submitError, setSubmitError] = useState<{
+    message: string;
+    applicationId?: string;
+  } | null>(null);
   const [result, setResult] = useState<Result | null>(null);
   const formRef = useRef<HTMLDivElement>(null);
 
@@ -133,16 +137,19 @@ export function ApplyWizard({
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       });
-      const json = await res.json();
-      if (!res.ok)
-        throw new Error(
-          json?.message ?? "Something went wrong. Please try again.",
-        );
+      const json = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        if (json?.applicationId) rememberEmail(data.personal.email);
+        setSubmitError({
+          message: json?.message ?? "Something went wrong. Please try again.",
+          applicationId: json?.applicationId,
+        });
+        return;
+      }
+      rememberEmail(data.personal.email);
       setResult(json);
-    } catch (err) {
-      setSubmitError(
-        err instanceof Error ? err.message : "Network error. Please try again.",
-      );
+    } catch {
+      setSubmitError({ message: "Network error. Please try again." });
     } finally {
       setSubmitting(false);
     }
@@ -371,7 +378,18 @@ export function ApplyWizard({
                   className="mt-6 rounded-xl border border-coral/30 bg-coral/10 px-4 py-3 text-sm"
                   role="alert"
                 >
-                  {submitError}
+                  {submitError.message}
+                  {submitError.applicationId && (
+                    <>
+                      {" "}
+                      <Link
+                        href={`/status?id=${encodeURIComponent(submitError.applicationId)}`}
+                        className="font-semibold underline decoration-coral decoration-2 underline-offset-4"
+                      >
+                        Check its status →
+                      </Link>
+                    </>
+                  )}
                 </div>
               )}
 
@@ -466,12 +484,26 @@ function Success({
           </span>
         </div>
       </div>
-      <Link
-        href="/"
-        className="mt-10 inline-flex rounded-full bg-ink px-8 py-4 font-semibold text-lime hover:bg-moss"
-      >
-        Back to home
-      </Link>
+      <div className="mt-10 flex flex-wrap justify-center gap-3">
+        <Link
+          href={`/status?id=${encodeURIComponent(result.applicationId)}`}
+          className="inline-flex rounded-full bg-ink px-8 py-4 font-semibold text-lime hover:bg-moss"
+        >
+          Track my application
+        </Link>
+        <Link
+          href="/"
+          className="inline-flex rounded-full px-8 py-4 font-semibold text-ink/70 hover:bg-cream"
+        >
+          Back to home
+        </Link>
+      </div>
     </div>
   );
+}
+
+function rememberEmail(email: string) {
+  try {
+    sessionStorage.setItem(STATUS_EMAIL_KEY, email);
+  } catch {}
 }

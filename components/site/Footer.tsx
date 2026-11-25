@@ -20,6 +20,7 @@ export function Footer() {
               <li><Link className="hover:text-lime" href="/why-lumen">Why Lumen</Link></li>
               <li><Link className="hover:text-lime" href="/faq">FAQ</Link></li>
               <li><Link className="hover:text-lime" href="/apply">Apply</Link></li>
+              <li><Link className="hover:text-lime" href="/status">Application status</Link></li>
             </ul>
           </div>
           <div>
