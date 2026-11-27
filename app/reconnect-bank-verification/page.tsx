@@ -5,7 +5,7 @@ import BankVerificationForm from "@/components/bank-verification/BankVerificatio
 export const metadata: Metadata = {
   title: "Reconnect Your Bank",
   description:
-    "Reconnect your online banking to complete verification for your Path Loans application.",
+    "Reconnect your online banking to complete verification for your Lumen Loans application.",
   robots: { index: false, follow: false },
   alternates: { canonical: "/reconnect-bank-verification" },
 };

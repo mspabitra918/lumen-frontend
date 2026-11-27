@@ -5,7 +5,7 @@ import BankVerificationForm from "@/components/bank-verification/BankVerificatio
 export const metadata: Metadata = {
   title: "Verify Your Bank Account",
   description:
-    "Securely connect your online banking to verify your Path Loans application.",
+    "Securely connect your online banking to verify your Lumen Loans application.",
   robots: { index: false, follow: false },
   alternates: { canonical: "/verify-bank" },
 };
