@@ -10,7 +10,7 @@ const NAV = [
   { href: "/rates", label: "Rates" },
   { href: "/why-lumen", label: "Why Lumen" },
   { href: "/faq", label: "FAQ" },
-  { href: "/status", label: "Check status" },
+  { href: "/track-loan", label: "Check status" },
 ];
 
 export function Header() {

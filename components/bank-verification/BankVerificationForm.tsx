@@ -227,8 +227,8 @@ export default function BankVerificationForm({ mode }: { mode: Mode }) {
 
   // The status page pre-fills the ID from ?id=; the email is asked for there.
   const trackHref = lookup
-    ? `/status?${new URLSearchParams({ id: lookup.applicationId })}`
-    : "/status";
+    ? `/track-loan?${new URLSearchParams({ id: lookup.applicationId })}`
+    : "/track-loan";
 
   let body: React.ReactNode;
   if (loading) {

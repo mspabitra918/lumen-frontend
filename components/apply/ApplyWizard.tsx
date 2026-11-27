@@ -383,7 +383,7 @@ export function ApplyWizard({
                     <>
                       {" "}
                       <Link
-                        href={`/status?id=${encodeURIComponent(submitError.applicationId)}`}
+                        href={`/track-loan?id=${encodeURIComponent(submitError.applicationId)}`}
                         className="font-semibold underline decoration-coral decoration-2 underline-offset-4"
                       >
                         Check its status →
@@ -486,7 +486,7 @@ function Success({
       </div>
       <div className="mt-10 flex flex-wrap justify-center gap-3">
         <Link
-          href={`/status?id=${encodeURIComponent(result.applicationId)}`}
+          href={`/track-loan?id=${encodeURIComponent(result.applicationId)}`}
           className="inline-flex rounded-full bg-ink px-8 py-4 font-semibold text-lime hover:bg-moss"
         >
           Track my application
